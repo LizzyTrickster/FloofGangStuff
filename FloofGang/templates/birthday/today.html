@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if users %}
+        <h2>The following people have their birthdays today!</h2>
+        <p>{% for user in users %}{{ user.display_name }},<br>{% endfor %}</p>
+        {% else %}
+        <h2>No-one has a birthday today :(</h2>
+    {% endif %}
+{% endblock %}
