@@ -4,27 +4,44 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Floof Gang OwO</title>
+    <link rel="stylesheet" href="{% static "css/milligram.css" %}">
+    <link rel="stylesheet" href="{% static "css/custom.css" %}">
 </head>
 <body>
-<h4>NO CSS CURRENTLY, ALL IMAGES ARE PLACEHOLDERS</h4>
-{% block navbar %}
-<div>
-<img alt="Floof gang banner" src="{% static 'img/banner.png' %}" width="1200" height="300"><br>
+<div class="container">
+    <h4 style="text-align: center">NOT FINAL, ALL IMAGES ARE PLACEHOLDERS</h4>
+    {% block navbar %}
+        <div class="row">
+            <div>
+                <img alt="Floof gang banner" src="{% static 'img/banner.png' %}" width="1200" height="300"><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h1 style="text-align: center;"><a href="/">TheVirtualFloof's Virtual Birthday Calendar!</a></h1>
+            </div>
+        </div>
+    {% endblock %}
+    {% if messages %}
+        <div class="row">
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tag %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <hr>
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+        <hr>
+        <div class="row">
+            <div class="column">
+                <p style="text-align: center">This is a footer... UwU<br>Site made with <3 by Liizzii.</p>
+            </div>
+        </div>
+    {% endblock %}
 </div>
-{% endblock %}
-{% if messages %}
-    <ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tag %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}
-{% block content %}
-{% endblock %}
-{% block footer %}
-    <div>
-    <p>This is a footer... UwU<br>Site made with <3 by Liizzii.</p>
-    </div>
-{% endblock %}
 </body>
 </html>

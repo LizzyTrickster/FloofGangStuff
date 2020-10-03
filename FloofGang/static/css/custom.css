@@ -1,0 +1,8 @@
+.form-complete {
+    border-color: green !important;
+}
+
+.form-nologin {
+    border-color: red !important;
+    background-color: lightgray !important;
+}

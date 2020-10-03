@@ -31,9 +31,15 @@ class Submissions(View):
                 entry = Birthday.objects.get(user=request.user)
             except:
                 entry = None
+        class_string = None
+        if request.user.is_authenticated and entry:
+                class_string = 'form-complete'
+        elif not request.user.is_authenticated:
+            class_string = 'form-nologin'
         return render(request, "birthday/submission.html",
                       context=dict(logged_in=request.user.is_authenticated,
-                                   disabled='disabled="" ' if not request.user.is_authenticated or entry else "",
+                                   disabled=(not request.user.is_authenticated or entry),
+                                   class_string=class_string,
                                    entry=entry,
                                    days=self.days,
                                    months=self.months
@@ -53,7 +59,7 @@ class Submissions(View):
                 raise
             else:
                 messages.add_message(request, messages.SUCCESS, "Entry successfully recorded!")
-        return redirect("/submission")
+        return redirect("/submission")  # TODO: Should probably not do a redirect but just return the page instead
         # return render(request, "birthday/submission.html",
         #               context=dict(logged_in=request.user.is_authenticated,
         #                            disabled='disabled="" ' if not request.user.is_authenticated else ""
