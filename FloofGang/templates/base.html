@@ -4,12 +4,13 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Floof Gang OwO</title>
-    <link rel="stylesheet" href="{% static "css/milligram.css" %}">
+    <link rel="stylesheet" href="{% static "css/milligram.min.css" %}">
     <link rel="stylesheet" href="{% static "css/custom.css" %}">
 </head>
 <body>
-<div class="container">
-    {% block navbar %}
+
+{% block navbar %}
+    <div class="container">
         <div class="row">
             <div>
                 <img alt="Floof gang banner" src="{% static 'img/banner-1100.png' %}"
@@ -26,19 +27,25 @@
                 <h1 style="text-align: center;"><a href="/">TheVirtualFloof's Virtual Birthday Calendar!</a></h1>
             </div>
         </div>
-    {% endblock %}
-    {% if messages %}
+    </div>
+{% endblock %}
+{% if messages %}
+    <div class="container">
         <div class="row">
             <ul class="messages">
                 {% for message in messages %}
-                    <li{% if message.tag %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <li{% if message.tags %} class="message-{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endfor %}
             </ul>
         </div>
-    {% endif %}
-    <hr>
+    </div>
+{% endif %}
+<hr>
+<div class="container">
     {% block content %}
     {% endblock %}
+</div>
+<div class="container">
     {% block footer %}
         <hr>
         <div class="row">

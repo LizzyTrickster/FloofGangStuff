@@ -6,3 +6,21 @@
     border-color: red !important;
     background-color: lightgray !important;
 }
+
+.message-success {
+    border-color: green;
+    border-style: solid;
+
+}
+.message-info {
+    border-style: solid;
+    border-color: blue;
+}
+.message-warning {
+    border-style: solid;
+    border-color: orange;
+}
+.message-error {
+    border-style: solid;
+    border-color: red;
+}
