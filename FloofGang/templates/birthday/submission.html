@@ -53,10 +53,9 @@
                         form.</p>
                 {% endif %}
             {% else %}
-                <p style="color:red">You need to login via Discord or Twitch before you can submit this form.</p>
+                <p style="color:red">You need to login via Discord before you can submit this form.</p>
                 <p>
                     <a class="button" href="{% url 'social:begin' 'discord' %}">Login with Discord!</a>
-                    <a class="button" href="{% url 'social:begin' 'twitch' %}">Login with Twitch!</a>
                 </p>
             {% endif %}
         </fieldset>
@@ -71,15 +70,7 @@
                     {{ socialauth.extra_data.discriminator }}{% endif %}
             {% endfor %}</b>
         {% endif %}<br>
-        {% if "twitch" in backends.not_associated %}
-            You are currently not logged in via Twitch.
-        {% else %}
-            You're currently logged in via Twitch as
-            {% for socialauth in backends.associated %}
-                {% if "discord_id" in socialauth.extra_data %}{{ socialauth.extra_data.username }}#
-                    {{ socialauth.extra_data.discriminator }}{% endif %}
-            {% endfor %}
-        {% endif %}<br>
+        <br>
         {#        <h1>success</h1><a href="/logout">logout</a><br>#}
         {#        {% for social in backends.associated %}<p>{{ social.extra_data }}</p>{% endfor %}#}
         {#        <p>{{ backends.associated }}|-{{ backends.not_associated }}-|{{ backends }}</p><br>#}
