@@ -94,10 +94,15 @@ WSGI_APPLICATION = 'FloofGangStuff.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        "HOST": config("DB_HOST", default="localhost"),
+        "NAME": config("DB_DATABASE"),
+        "USER": config("DB_USERNAME"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "CONN_MAX_AGE": 120
     }
 }
+
 
 
 # Password validation
