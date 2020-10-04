@@ -6,6 +6,8 @@ from django.db.utils import IntegrityError
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.views import View
+
+from .ext import UserInputError
 from .models import Birthday
 import datetime
 
@@ -50,21 +52,39 @@ class Submissions(View):
         uname = request.POST['uname']
         day = int(request.POST['bday'])
         month = int(request.POST['bmon'])
+        error_msg = f"Invalid day ({day}) specified for month {month}. Your response has not been recorded."
+        entry: Birthday = None
         if request.user.is_authenticated:
             try:
-                Birthday.objects.create(user=request.user, display_name=uname, birthday=f"{day:02}{month:02}")
+                if month in [4, 6, 9, 11] and day > 30:
+                    raise UserInputError
+                elif month == 2 and day > 29:
+                    raise UserInputError
+
+                entry = Birthday.objects.create(user=request.user, display_name=uname, birthday=f"{day:02}{month:02}")
             except IntegrityError:
                 messages.add_message(request, messages.ERROR, "Duplicate entry exists!?")
+            except UserInputError:
+                messages.error(request, error_msg)
             except:
                 raise
             else:
                 messages.add_message(request, messages.SUCCESS, "Entry successfully recorded!")
-        return redirect("/submission")  # TODO: Should probably not do a redirect but just return the page instead
-        # return render(request, "birthday/submission.html",
-        #               context=dict(logged_in=request.user.is_authenticated,
-        #                            disabled='disabled="" ' if not request.user.is_authenticated else ""
-        #                            )
-        #               )
+
+        class_string = None
+        if request.user.is_authenticated and entry:
+            class_string = 'form-complete'
+        elif not request.user.is_authenticated:
+            class_string = 'form-nologin'
+        return render(request, "birthday/submission.html",
+                      context=dict(logged_in=request.user.is_authenticated,
+                                   disabled=(not request.user.is_authenticated or entry),
+                                   class_string=class_string,
+                                   entry=entry,
+                                   days=self.days,
+                                   months=self.months
+                                   )
+                      )
 
 
 def logout_view(request):
