@@ -9,11 +9,16 @@
 </head>
 <body>
 <div class="container">
-    <h4 style="text-align: center">NOT FINAL, ALL IMAGES ARE PLACEHOLDERS</h4>
     {% block navbar %}
         <div class="row">
             <div>
-                <img alt="Floof gang banner" src="{% static 'img/banner.png' %}" width="1200" height="300"><br>
+                <img alt="Floof gang banner" src="{% static 'img/banner-1100.png' %}"
+                     srcset="{% static 'img/banner-600.png' %} 600w,
+                        {% static 'img/banner-900.png' %} 900w,
+                        {% static 'img/banner-1100.png' %} 1100w"
+                     sizes="(max-width: 700px) 600px,
+                            (max-width: 1000px) 900px,
+                            1100px"><br>
             </div>
         </div>
         <div class="row">
