@@ -6,7 +6,7 @@
         </div>
         <div class="row">
             <ul>
-                <li>{% for user in users %}{{ user.display_name }}{% endfor %}</li>
+                {% for user in users %}<li>{{ user.display_name }}</li>{% endfor %}
             </ul>
         </div>
     {% else %}
