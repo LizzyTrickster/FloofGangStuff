@@ -14,6 +14,8 @@ class Birthday(models.Model):
     display_name = models.TextField(max_length=32)
     birthday = models.TextField(max_length=4)
 
+    notify = models.BooleanField(default=False)
+
     @property
     def get_day(self):
         return self.birthday[:2]
