@@ -45,19 +45,26 @@
                     </select>
                 </div>
             </div>
+            <div class="row">
             {% if logged_in %}
-                {% if not entry %}
-                    <input class="button-primary" type="submit" value="submit">
-                {% else %}
-                    <p style="color:green">You've already provided your details, therefore you cannot submit this
-                        form.</p>
+                {% if entry %}
+                    <p style="color:green">You've already provided your details, therefore you cannot submit any new data.</p>
                 {% endif %}
+            </div>
+            <div class="row">
+                <div class="column">
+                    <input type="checkbox" id="noti" name="noti" value="1"{% if entry.notify %} checked{% endif %}>
+                    <label class="label-inline" for="noti">Yes, I want to have my birthday announced on the discord.</label>
+
+                </div>
+                <div class="float-right"><input class="button-primary" type="submit" value="submit"></div>
             {% else %}
-                <p style="color:red">You need to login via Discord before you can submit this form.</p>
-                <p>
+                <p style="color:red">
+                    You need to login via Discord before you can submit this form.<br>
                     <a class="button" href="{% url 'social:begin' 'discord' %}">Login with Discord!</a>
                 </p>
             {% endif %}
+            </div>
         </fieldset>
     </form>
     {% if logged_in %}
