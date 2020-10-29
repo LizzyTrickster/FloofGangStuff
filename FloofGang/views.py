@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.views import View
 
+from django.http import JsonResponse, HttpResponse
+from social_django.models import UserSocialAuth
+
 from .ext import UserInputError
 from .models import Birthday
 import datetime
@@ -19,7 +22,23 @@ def landing_page(request):
 def today(request):
     current_date = datetime.datetime.utcnow().strftime("%d%m")
     peoples = Birthday.objects.filter(birthday__exact=current_date)
-    return render(request, "birthday/today.html", context=dict(users=peoples))
+    if request.META.get('HTTP_ACCEPT', '*/*') == 'application/json':
+        birthdays = list()
+        for user in peoples:
+            entry = dict(displayName=user.display_name, ping=user.notify)
+            if user.notify:
+                entry['discordID'] = int(UserSocialAuth.get_social_auth_for_user(user.user, provider="discord")[0].extra_data['discord_id'])
+            birthdays.append( entry )
+        data = dict(date=current_date, count=len(birthdays), birthdays=birthdays)
+        return JsonResponse(data)
+    else:
+        return render(request, "birthday/today.html", context=dict(users=peoples))
+
+
+def today_neos(request):
+    current_date = datetime.datetime.utcnow().strftime("%d%m")
+    peoples = Birthday.objects.filter(birthday__exact=current_date)
+    return HttpResponse("\n".join([user.display_name for user in peoples]), content_type="text/plain")
 
 
 class Submissions(View):

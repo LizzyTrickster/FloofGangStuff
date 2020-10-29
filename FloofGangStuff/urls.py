@@ -24,6 +24,7 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),
     path('logout', FloofGang.views.logout_view),
     path('admin/', admin.site.urls),
+    path('today/neos', FloofGang.views.today_neos),
     path('today', FloofGang.views.today),
     path('submission', FloofGang.views.Submissions.as_view()),
     path('', FloofGang.views.landing_page)
