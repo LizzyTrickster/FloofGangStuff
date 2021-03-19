@@ -99,7 +99,7 @@ DATABASES = {
         "NAME": config("DB_DATABASE"),
         "USER": config("DB_USERNAME"),
         "PASSWORD": config("DB_PASSWORD"),
-        "CONN_MAX_AGE": 120
+        "CONN_MAX_AGE": 28800
     }
 }
 
